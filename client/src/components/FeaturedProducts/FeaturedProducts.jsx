@@ -1,46 +1,34 @@
 import React from "react";
 import "./FeaturedProducts.scss";
 import Card from "../Card/Card";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const FeaturedProducts = ({ type }) => {
-  const data = [
-    {
-      id: 1,
-      img: "https://images.pexels.com/photos/1972115/pexels-photo-1972115.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      img2: "https://images.pexels.com/photos/1163194/pexels-photo-1163194.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      title: "Long Sleeve Graphic T-Shirt",
-      isNew: true,
-      oldPrice: 19,
-      newPrice: 12,
-    },
-    {
-      id: 2,
-      img: "https://images.pexels.com/photos/1972116/pexels-photo-1972116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      img2: "https://images.pexels.com/photos/1163198/pexels-photo-1163198.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      title: "Coat",
-      isNew: true,
-      oldPrice: 19,
-      newPrice: 12,
-    },
-    {
-      id: 3,
-      img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      img2: "https://images.pexels.com/photos/994517/pexels-photo-994517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      title: "Casual Denim Jacket",
-      isNew: false,
-      oldPrice: 35,
-      newPrice: 25,
-    },
-    {
-      id: 4,
-      img: "https://images.pexels.com/photos/428340/pexels-photo-428340.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      img2: "https://images.pexels.com/photos/934070/pexels-photo-934070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      title: "Leather Boots",
-      isNew: true,
-      oldPrice: 80,
-      newPrice: 60,
-    },
-  ];
+
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(process.env.REACT_APP_API_URL + "/products?populate=*", {
+          headers: {
+            Authorization: "bearer " + process.env.REACT_APP_API_TOKEN,
+          },
+        });
+        
+        setData(res.data.data)
+      } catch(err) {
+        console.log(err)
+      
+      }
+    }
+    fetchData();
+  }, []);
+
+  console.log(data)
+
   return (
     <div className="featuredProducts">
       <div className="top">
