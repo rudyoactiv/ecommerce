@@ -8,7 +8,7 @@ import "./Products.scss";
 const Products = () => {
   const catId = parseInt(useParams().id);
   const [maxPrice, setMaxPrice] = useState(1000);
-  const [sort, setSort] = useState(null);
+  const [sort, setSort] = useState("asc");
   const [selectedSubCats, setSelectedSubCats] = useState([]);
 
   const { data, loading, error } = useFetch(
@@ -69,6 +69,7 @@ const Products = () => {
               value="asc"
               name="price"
               onChange={(e) => setSort("asc")}
+              defaultChecked
             />
             <label htmlFor="asc">Price (Lowest first)</label>
           </div>
